@@ -1,7 +1,7 @@
-const { isObject } = require('./helpers')
-const { fixType } = require('./fixType')
-const { formSchema } = require('../schema/formSchema')
-const { fieldSchema } = require('../schema/fieldSchema')
+const { isObject } = require(`./helpers`)
+const { fixType } = require(`./fixType`)
+const { formSchema } = require(`../schema/formSchema`)
+const { fieldSchema } = require(`../schema/fieldSchema`)
 
 /**
  * Take raw Gravity Forms data and turn into usable
@@ -29,12 +29,12 @@ const processForms = (
     // contentDigest tracks any changes and lets Gatsby know if
     // the data needs to be rerendered, or is everything is
     // the same.
-    let newFormObj = {
+    const newFormObj = {
         id: createNodeID(`gravity-form-${mergedSchemaData.id.toString()}`),
         formId: parseInt(mergedSchemaData.id),
         internal: {
             contentDigest: createContentDigest(mergedSchemaData),
-            type: 'GF__Form',
+            type: `GF__Form`,
         },
     }
 
@@ -58,7 +58,7 @@ const processForms = (
 
     for (const [key, value] of Object.entries(mergedSchemaData)) {
         if (!ignoreFields.includes(key)) {
-            if (key == 'fields') {
+            if (key == `fields`) {
                 // Gatsby has saved 'fields' for its own use
                 // so we cannot use this key.
 
@@ -78,13 +78,14 @@ const processForms = (
                     mergedSchemaData[key][i] = fixType(currentField)
                 })
 
+                console.log(mergedSchemaData[key])
                 // Push to new object
-                newFormObj['formFields'] = mergedSchemaData[key]
-            } else if (key === 'confirmations') {
+                newFormObj[`formFields`] = mergedSchemaData[key]
+            } else if (key === `confirmations`) {
                 // Gravity Forms saves confirmations in a strange object
                 // layout. It would be better to clean this up
 
-                let cleanConfirmations = []
+                const cleanConfirmations = []
 
                 for (const [subKey, subValue] of Object.entries(
                     mergedSchemaData[key]
@@ -93,7 +94,7 @@ const processForms = (
                 }
 
                 // Push to new object
-                newFormObj['confirmations'] = cleanConfirmations
+                newFormObj[`confirmations`] = cleanConfirmations
             } else {
                 newFormObj[key] = mergedSchemaData[key]
             }
