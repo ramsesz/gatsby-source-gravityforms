@@ -63,8 +63,6 @@ async function getFormFields(basicAuth, api, baseUrl, form) {
         api.secret
     )
 
-    console.log(signature)
-
     try {
         result = await axios.get(
             baseUrl + routes.wp + routes.gf + routes.forms + `/` + form.id,
@@ -98,6 +96,7 @@ async function getFormsAndFields(basicAuth, api, baseUrl) {
     // If there are forms to move with
     if (allForms) {
         if (!isObjEmpty(allForms)) {
+            // eslint-disable-next-line no-unused-vars
             for (const [key, value] of Object.entries(allForms)) {
                 // Clone form object
                 const currentForm = { ...allForms[key] }

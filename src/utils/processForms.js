@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable filenames/match-regex */
 const { isObject } = require(`./helpers`)
 const { fixType } = require(`./fixType`)
 const { formSchema } = require(`../schema/formSchema`)
@@ -78,7 +80,6 @@ const processForms = (
                     mergedSchemaData[key][i] = fixType(currentField)
                 })
 
-                console.log(mergedSchemaData[key])
                 // Push to new object
                 newFormObj[`formFields`] = mergedSchemaData[key]
             } else if (key === `confirmations`) {
